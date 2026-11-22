@@ -1,3 +1,4 @@
+
 import SwiftUI
 import UIKit
 
@@ -14,19 +15,24 @@ struct ContentView: View {
                 Color.black
                     .ignoresSafeArea()
                     .contentShape(Rectangle())
-                    .onTapGesture(count: 2) {
-                        exitBlackScreen()
-                    }
+                    .highPriorityGesture(
+                        TapGesture(count: 2)
+                            .onEnded {
+                                exitBlackScreen()
+                            }
+                    )
             } else {
-                Button {
-                    activateBlackScreen()
-                } label: {
+                Button(action: activateBlackScreen) {
                     Text("Activate Black Screen")
+                        .font(.title3)
                         .foregroundColor(.white)
+                        .padding()
                 }
             }
         }
+        .background(Color.black)
         .preferredColorScheme(.dark)
+        .statusBarHidden(blackScreenActive)
         .onAppear {
             updateIdleTimer()
         }
