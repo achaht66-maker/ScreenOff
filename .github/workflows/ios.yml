@@ -16,10 +16,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install XcodeGen
+      - name: Install XCodeGen
         run: brew install xcodegen
 
-      - name: Generate Xcode project
+      - name: Generate XCode project
         working-directory: ScreenOff-iOS/ScreenOff-iOS
         run: xcodegen generate
 
@@ -35,8 +35,8 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build
 
-           - name: Upload build artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: ScreenOff-iOS-Simulator
-          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/*.app
+          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/ScreenOff.app
