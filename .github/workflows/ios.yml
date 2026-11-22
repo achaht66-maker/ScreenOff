@@ -1,0 +1,23 @@
+
+name: iOS Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'ScreenOff-iOS/**'
+      - '.github/workflows/ios.yml'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Prepare build
+        run: echo "macOS runner is ready for Screen Off iOS"
