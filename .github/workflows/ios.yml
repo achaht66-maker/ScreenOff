@@ -1,5 +1,5 @@
 
-name: iOS Build
+name: Screen Off iOS Build
 
 on:
   workflow_dispatch:
@@ -16,8 +16,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show Xcode version
-        run: xcodebuild -version
+      - name: Install XcodeGen
+        run: brew install xcodegen
 
-      - name: Prepare build
-        run: echo "macOS runner is ready for Screen Off iOS"
+      - name: Generate Xcode project
+        working-directory: ScreenOff-iOS/ScreenOff-iOS
+        run: xcodegen generate
+
+      - name: Build iOS app
+        working-directory: ScreenOff-iOS/ScreenOff-iOS
+        run: |
+          xcodebuild \
+            -project ScreenOff.xcodeproj \
+            -scheme ScreenOff \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ScreenOff-iOS-Simulator
+          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/ScreenOff.app
