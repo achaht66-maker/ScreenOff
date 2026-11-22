@@ -1,0 +1,25 @@
+
+name: ScreenOff
+
+options:
+  bundleIdPrefix: com.screenoff
+  deploymentTarget:
+    iOS: "16.0"
+
+targets:
+  ScreenOff:
+    type: application
+    platform: iOS
+    sources:
+      - ContentView.swift
+      - ScreenOffApp.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.screenoff.app
+        PRODUCT_NAME: Screen Off
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_KEY_CFBundleDisplayName: Screen Off
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        CODE_SIGNING_ALLOWED: NO
