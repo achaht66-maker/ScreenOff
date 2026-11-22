@@ -23,21 +23,20 @@ jobs:
         working-directory: ScreenOff-iOS/ScreenOff-iOS
         run: xcodegen generate
 
-      - name: Archive iPhone app
+      - name: Build iOS Simulator app
         working-directory: ScreenOff-iOS/ScreenOff-iOS
         run: |
           xcodebuild \
             -project ScreenOff.xcodeproj \
             -scheme ScreenOff \
-            -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
-            -archivePath build/ScreenOff.xcarchive \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath build/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
-            archive
+            build
 
-      - name: Upload iPhone archive
+      - name: Upload Simulator app
         uses: actions/upload-artifact@v4
         with:
-          name: ScreenOff-iPhone-Archive
-          path: ScreenOff-iOS/ScreenOff-iOS/build/ScreenOff.xcarchive
+          name: ScreenOff-iOS-Simulator
+          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/Screen Off.app
