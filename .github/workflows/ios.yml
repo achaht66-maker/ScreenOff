@@ -39,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ScreenOff-iOS-Simulator
-          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/ScreenOff.app
+          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/Screen Off.app
