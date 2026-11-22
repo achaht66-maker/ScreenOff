@@ -19,24 +19,25 @@ jobs:
       - name: Install XCodeGen
         run: brew install xcodegen
 
-      - name: Generate XCode project
+      - name: Generate Xcode project
         working-directory: ScreenOff-iOS/ScreenOff-iOS
         run: xcodegen generate
 
-      - name: Build iOS app
+      - name: Archive iPhone app
         working-directory: ScreenOff-iOS/ScreenOff-iOS
         run: |
           xcodebuild \
             -project ScreenOff.xcodeproj \
             -scheme ScreenOff \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/ScreenOff.xcarchive \
             -derivedDataPath build/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
-            build
+            archive
 
-      - name: Upload build artifact
+      - name: Upload iPhone archive
         uses: actions/upload-artifact@v4
         with:
-          name: ScreenOff-iOS-Simulator
-          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/Screen Off.app
+          name: ScreenOff-iPhone-Archive
+          path: ScreenOff-iOS/ScreenOff-iOS/build/ScreenOff.xcarchive
