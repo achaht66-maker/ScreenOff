@@ -1,6 +1,7 @@
 
 import SwiftUI
 import UIKit
+import AVFoundation
 
 struct ContentView: View {
     @State private var blackScreenActive = true
@@ -34,6 +35,7 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
         .statusBarHidden(blackScreenActive)
         .onAppear {
+            configureAudioMixing()
             updateIdleTimer()
         }
         .onChange(of: blackScreenActive) { _ in
@@ -56,5 +58,18 @@ struct ContentView: View {
 
     private func updateIdleTimer() {
         UIApplication.shared.isIdleTimerDisabled = blackScreenActive
+    }
+
+    private func configureAudioMixing() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(
+                .ambient,
+                mode: .default,
+                options: [.mixWithOthers]
+            )
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Audio configuration failed: \(error)")
+        }
     }
 }
