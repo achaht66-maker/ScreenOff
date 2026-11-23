@@ -35,8 +35,18 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build
 
-      - name: Upload Simulator app
+      - name: Verify Simulator app
+        run: |
+          test -d "ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/Screen Off.app"
+          echo "Simulator app found successfully"
+
+      - name: Zip Simulator app
+        run: |
+          cd ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator
+          ditto -c -k --sequesterRsrc --keepParent "Screen Off.app" ScreenOff.zip
+
+      - name: Upload Simulator ZIP
         uses: actions/upload-artifact@v4
         with:
           name: ScreenOff-iOS-Simulator
-          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/Screen Off.app
+          path: ScreenOff-iOS/ScreenOff-iOS/build/DerivedData/Build/Products/Debug-iphonesimulator/ScreenOff.zip
